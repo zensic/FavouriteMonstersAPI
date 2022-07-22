@@ -30,7 +30,7 @@ builder.Services.AddDbContext<MonstersDbContext>(options =>
     else
     {
         // If development environment, use connection string in appsettings config
-        connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
+        connectionString = builder.Configuration.GetConnectionString("MonstersDbContextConnection") ?? throw new InvalidOperationException("Connection string 'MonstersDbContextConnection' not found.");
     }
 
     options.UseMySql(connectionString, serverVersion);
