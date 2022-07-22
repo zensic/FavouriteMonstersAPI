@@ -26,7 +26,7 @@ namespace FavouriteMonstersAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Monsters), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var monster = await _context.Monsters.FindAsync(id);
             return monster == null ? NotFound() : Ok(monster);
@@ -44,7 +44,7 @@ namespace FavouriteMonstersAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update(int id, Monsters monster)
+        public async Task<IActionResult> Update(Guid id, Monsters monster)
         {
             if (id != monster.Id) return BadRequest();
 
@@ -55,7 +55,7 @@ namespace FavouriteMonstersAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var monsterToDelete = await _context.Monsters.FindAsync(id);
             if (monsterToDelete == null) return NotFound();
