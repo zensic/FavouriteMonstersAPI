@@ -36,6 +36,15 @@ builder.Services.AddDbContext<MonstersDbContext>(options =>
     options.UseMySql(connectionString, serverVersion);
 });
 
+// Allows any origin, header, methods
+builder.Services.AddCors(policy =>
+{
+    policy.AddPolicy("OpenCorsPolicy", options =>
+        options.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,6 +55,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("OpenCorsPolicy");
 
 app.UseAuthorization();
 
