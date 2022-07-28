@@ -44,7 +44,7 @@ namespace FavouriteMonstersAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update(Guid id, [FromBody] Monsters monster)
+        public async Task<IActionResult> Update(Guid id,[FromBody] Monsters monster)
         {
             if (id != monster.Id) return BadRequest();
 
