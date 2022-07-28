@@ -33,7 +33,7 @@ namespace FavouriteMonstersAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Monsters monster)
+        public async Task<IActionResult> Create([FromBody] Monsters monster)
         {
             await _context.Monsters.AddAsync(monster);
             await _context.SaveChangesAsync();
@@ -44,7 +44,7 @@ namespace FavouriteMonstersAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update(Guid id, Monsters monster)
+        public async Task<IActionResult> Update(Guid id, [FromBody] Monsters monster)
         {
             if (id != monster.Id) return BadRequest();
 
