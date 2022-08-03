@@ -18,9 +18,22 @@ namespace FavouriteMonstersAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Monsters>> Get()
+        public async Task<IEnumerable<object>> Get()
         {
-            return await _context.Monsters.ToListAsync();
+            var mons = await (from monsters in _context.Monsters
+                              join elements in _context.Elements on monsters.ElementId equals elements.Id
+                              select new
+                              {
+                                  Id = monsters.Id,
+                                  Name = monsters.Name,
+                                  Element = elements.Name,
+                                  Color = elements.Color,
+                                  Url = monsters.ImageUrl
+                              })
+                                    .AsNoTracking()
+                                    .ToListAsync();
+
+            return mons;
         }
 
         [HttpGet("{id}")]
@@ -33,18 +46,19 @@ namespace FavouriteMonstersAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Create([FromBody] Monsters monster)
         {
             await _context.Monsters.AddAsync(monster);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new {id = monster.Id}, monster);
+            return CreatedAtAction(nameof(GetById), new { id = monster.Id }, monster);
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update(Guid id,[FromBody] Monsters monster)
+        public async Task<IActionResult> Update(Guid id, [FromBody] Monsters monster)
         {
             if (id != monster.Id) return BadRequest();
 
