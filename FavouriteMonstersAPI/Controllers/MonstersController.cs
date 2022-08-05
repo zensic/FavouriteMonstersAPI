@@ -18,7 +18,7 @@ namespace FavouriteMonstersAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<object>> Get()
+        public async Task<IActionResult> Get()
         {
             var mons = await (from monsters in _context.Monsters
                               join elements in _context.Elements on monsters.ElementId equals elements.Id
@@ -33,7 +33,7 @@ namespace FavouriteMonstersAPI.Controllers
                                     .AsNoTracking()
                                     .ToListAsync();
 
-            return mons;
+            return Ok(mons);
         }
 
         [HttpGet("{id}")]
