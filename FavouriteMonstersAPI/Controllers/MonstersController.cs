@@ -1,4 +1,5 @@
 ﻿using FavouriteMonstersAPI.Data;
+using FavouriteMonstersAPI.Filters;
 using FavouriteMonstersAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ namespace FavouriteMonstersAPI.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
+  [TokenAuthenticationFilter]
   public class MonstersController : ControllerBase
   {
     private readonly MonstersDbContext _context;

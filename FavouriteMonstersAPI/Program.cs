@@ -1,4 +1,5 @@
 using FavouriteMonstersAPI.Data;
+using FavouriteMonstersAPI.TokenAuthentication;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +36,9 @@ builder.Services.AddDbContext<MonstersDbContext>(options =>
 
     options.UseMySql(connectionString, serverVersion);
 });
+
+// Add token manager
+builder.Services.AddScoped<ITokenManager, TokenManager>();
 
 // Allows any origin, header, methods
 builder.Services.AddCors(policy =>
