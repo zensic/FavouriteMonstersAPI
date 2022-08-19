@@ -41,10 +41,17 @@ namespace FavouriteMonstersAPI.TokenAuthentication
     public bool VerifyToken(string token)
     {
       // Check if token exists and has not expired
-      if (_context.Tokens.Any(x => x.Value == token && x.ExpiryDate > DateTime.Now))
+      //if (_context.Tokens.Any(x => x.Value == token && x.ExpiryDate > DateTime.Now))
+      //{
+      //  return true;
+      //}
+
+      // Check if token exists
+      if (_context.Tokens.Any(x => x.Value == token))
       {
         return true;
       }
+
       return false;
     }
   }
