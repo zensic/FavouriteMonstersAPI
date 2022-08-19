@@ -20,9 +20,9 @@ namespace FavouriteMonstersAPI.Filters
       string token = string.Empty;
       if (result)
       {
-        // Verify the authorization token
+        // Verify the authorization token, set result to false if fails
         token = context.HttpContext.Request.Headers.First(x => x.Key == "Authorization").Value;
-        if (tokenManager.VerifyToken(token))
+        if (!tokenManager.VerifyToken(token))
           result = false;
       }
 

@@ -38,6 +38,7 @@ namespace FavouriteMonstersAPI.TokenAuthentication
       return token;
     }
 
+    // Check if token exists, return true if exists
     public bool VerifyToken(string token)
     {
       // Check if token exists and has not expired
@@ -46,7 +47,6 @@ namespace FavouriteMonstersAPI.TokenAuthentication
       //  return true;
       //}
 
-      // Check if token exists
       if (_context.Tokens.Any(x => x.Value == token))
       {
         return true;
