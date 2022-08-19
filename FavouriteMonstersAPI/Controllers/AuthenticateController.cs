@@ -20,7 +20,7 @@ namespace FavouriteMonstersAPI.Controllers
     {
       if (tokenManager.Authenticate(user, pwd))
       {
-        return Ok(new { Token = tokenManager.Authenticate(user, pwd) });
+        return Ok(new {Token = tokenManager.NewToken()});
       }
       else
       {

@@ -20,16 +20,16 @@ namespace FavouriteMonstersAPI.Filters
       string token = string.Empty;
       if (result)
       {
-        // Obtain the value from the authorization key
+        // Verify the authorization token
         token = context.HttpContext.Request.Headers.First(x => x.Key == "Authorization").Value;
-        // Verify the token
         if (tokenManager.VerifyToken(token))
           result = false;
       }
 
+      // If authorization key or token verification fails, let them know that they're not authorized
       if (!result)
       {
-        context.ModelState.AddModelError("Unauthorized", "You are not auythorized.");
+        context.ModelState.AddModelError("Unauthorized", "You are not authorized.");
         context.Result = new UnauthorizedObjectResult(context.ModelState);
       }
     }
