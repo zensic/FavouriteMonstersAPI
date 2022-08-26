@@ -1,7 +1,6 @@
 ﻿using FavouriteMonstersAPI.Data;
 using FavouriteMonstersAPI.Filters;
 using FavouriteMonstersAPI.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
