@@ -46,6 +46,32 @@ namespace FavouriteMonstersAPI.Controllers
       return monster == null ? NotFound() : Ok(monster);
     }
 
+    [HttpGet("Details/{id}")]
+    [ProducesResponseType(typeof(Monsters), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetDetailsById(Guid id)
+    {
+      var monster = await (from monsters in _context.Monsters
+                               join elements in _context.Elements on monsters.ElementId equals elements.Id
+                               where monsters.Id == id
+                               select new
+                               {
+                                 Id = monsters.Id,
+                                 Name = monsters.Name,
+                                 Hp = monsters.HP,
+                                 Attack = monsters.Attack,
+                                 Defence = monsters.Defence,
+                                 Speed = monsters.Speed,
+                                 Element = elements.Name,
+                                 Color = elements.Color,
+                                 Url = monsters.ImageUrl
+                               })
+                              .AsNoTracking()
+                              .ToListAsync();
+
+      return Ok(monster);
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] Monsters monster)
