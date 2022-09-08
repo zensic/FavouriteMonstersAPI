@@ -52,24 +52,24 @@ namespace FavouriteMonstersAPI.Controllers
     public async Task<IActionResult> GetDetailsById(Guid id)
     {
       var monster = await (from monsters in _context.Monsters
-                               join elements in _context.Elements on monsters.ElementId equals elements.Id
-                               where monsters.Id == id
-                               select new
-                               {
-                                 Id = monsters.Id,
-                                 Name = monsters.Name,
-                                 Hp = monsters.HP,
-                                 Attack = monsters.Attack,
-                                 Defence = monsters.Defence,
-                                 Speed = monsters.Speed,
-                                 Element = elements.Name,
-                                 Color = elements.Color,
-                                 Url = monsters.ImageUrl
-                               })
+                           join elements in _context.Elements on monsters.ElementId equals elements.Id
+                           where monsters.Id == id
+                           select new
+                           {
+                             Id = monsters.Id,
+                             Name = monsters.Name,
+                             Hp = monsters.HP,
+                             Attack = monsters.Attack,
+                             Defence = monsters.Defence,
+                             Speed = monsters.Speed,
+                             Element = elements.Name,
+                             Color = elements.Color,
+                             Url = monsters.ImageUrl
+                           })
                               .AsNoTracking()
                               .ToListAsync();
 
-      return Ok(monster);
+      return Ok(monster.First());
     }
 
     [HttpPost]
