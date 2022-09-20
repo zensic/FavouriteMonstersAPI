@@ -52,7 +52,7 @@ namespace FavouriteMonstersAPI.Controllers
       }
       else
       {
-        return NotFound();
+        return Ok(teamDisplayList);
       }
     }
 
