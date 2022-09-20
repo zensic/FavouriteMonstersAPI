@@ -40,7 +40,7 @@ namespace FavouriteMonstersAPI.Controllers
         for (int i = 0; i < teamDisplayList.Count; i++)
         {
           // Grab monster ids of monsters in the team
-          List<Monsters> monstersList = await (from teamMonsters in _context.TeamMonsters
+          teamDisplayList[i].Monsters = await (from teamMonsters in _context.TeamMonsters
                                                join monsters in _context.Monsters on teamMonsters.MonsterId equals monsters.Id
                                                where teamMonsters.TeamId == teamDisplayList[i].Id
                                                select monsters)
@@ -57,7 +57,6 @@ namespace FavouriteMonstersAPI.Controllers
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateTeam([FromBody] TeamNew teamNew)
     {
       // Generate unique id for teams
@@ -73,12 +72,13 @@ namespace FavouriteMonstersAPI.Controllers
       // Add new team to teams table
       Teams teamTemp = new();
       teamTemp.Id = teamGuid;
-      teamTemp.UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+      teamTemp.UserId = teamNew.UserId;
 
       _context.Add(teamTemp);
       await _context.SaveChangesAsync();
 
-      return CreatedAtAction(nameof(CreateTeam), new { id = teamTemp.Id}, teamTemp);
+      //return CreatedAtAction(nameof(CreateTeam), new { id = teamGuid }, teamTemp);
+      return Ok();
     }
   }
 }
