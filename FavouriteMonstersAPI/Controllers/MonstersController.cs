@@ -79,7 +79,7 @@ namespace FavouriteMonstersAPI.Controllers
       await _context.Monsters.AddAsync(monster);
       await _context.SaveChangesAsync();
 
-      return CreatedAtAction(nameof(GetById), new { id = monster.Id }, monster);
+      return CreatedAtAction(nameof(Create), new { id = monster.Id }, monster);
     }
 
     [HttpPut("{id}")]
